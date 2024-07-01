@@ -7,8 +7,9 @@ export const loginService = async ({ email, password }) => {
     const data = await userApi.login({ email, password });
     setData("token", data?.content?.token);
     setData("userId", data?.content?.user?.id);
-    return data?.content;
+    return true;
   } catch (error) {
     toast.error(error?.data?.content);
+    return false;
   }
 };
