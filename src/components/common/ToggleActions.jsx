@@ -18,7 +18,7 @@ import { useCallback } from "react";
 const actions = [
   // { icon: <EditIcon color="warning" />, name: "Edit" },
   // { icon: <DeleteIcon color="error" />, name: "Delete" },
-  { icon: <AddIcon color="success" />, name: "Add" },
+  // { icon: <AddIcon color="success" />, name: "Add" },
 ];
 
 export default function ToggleActions() {
@@ -59,16 +59,16 @@ export default function ToggleActions() {
       onOpen={handleOpen}
       open={toggleActions.open}
       hidden={["/booking", "/"].includes(pathname)}
+      onClick={handleOpenModal}
     >
-      {actions.map((action) => (
+      {/* {actions.map((action) => (
         <SpeedDialAction
           key={action.name}
           icon={action.icon}
           tooltipTitle={action.name}
           tooltipOpen
-          onClick={handleOpenModal}
         />
-      ))}
+      ))} */}
     </SpeedDial>
   );
 }
