@@ -34,6 +34,7 @@ const LocationModal = () => {
   const [locationData, setLocationData] = useState(data);
   const [isLoading, setIsLoading] = useState(false);
   const [imageSelected, setImageSelected] = useState(null);
+  const [errors, setErrors] = useState(null);
 
   useEffect(() => {
     if (type === "edit" && data) setLocationData(data);
@@ -41,6 +42,8 @@ const LocationModal = () => {
 
   const handleClose = () => {
     setLocationData(null);
+    setIsLoading(false);
+    setErrors(null);
     dispatch(
       setLocationModal({
         type: null,
@@ -54,9 +57,38 @@ const LocationModal = () => {
     setLocationData({ ...locationData, [e.target.name]: e.target.value });
   };
 
+  console.log(locationData);
+
   const handleSubmit = async (e) => {
-    setIsLoading(true);
     e.preventDefault();
+    let err = false;
+
+    if (!locationData?.tenViTri) {
+      err = true;
+      setErrors((prev) => ({
+        ...prev,
+        ten: "Tên vị trí không được để trống",
+      }));
+    }
+
+    if (!locationData?.tinhThanh) {
+      err = true;
+      setErrors((prev) => ({
+        ...prev,
+        ten: "Tỉnh thành không được để trống",
+      }));
+    }
+
+    if (!locationData?.quocGia) {
+      err = true;
+      setErrors((prev) => ({
+        ...prev,
+        ten: "Tên quốc gia không được để trống",
+      }));
+    }
+    if (err) return;
+
+    setIsLoading(true);
 
     try {
       await uploadImage(imageSelected);
@@ -98,7 +130,7 @@ const LocationModal = () => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>
+      <Box sx={style} component={"form"} onSubmit={handleSubmit}>
         <Typography
           id="modal-modal-title"
           variant="h6"
@@ -147,6 +179,8 @@ const LocationModal = () => {
             required
             value={locationData?.tenViTri}
             onChange={handleChangeData}
+            error={!!errors?.tenViTri}
+            helperText={errors?.tenViTri}
           />
           <TextField
             label="Tỉnh thành"
@@ -154,6 +188,8 @@ const LocationModal = () => {
             value={locationData?.tinhThanh}
             onChange={handleChangeData}
             required
+            error={!!errors?.tinhThanh}
+            helperText={errors?.tinhThanh}
           />
           <TextField
             label="Quốc gia"
@@ -161,6 +197,8 @@ const LocationModal = () => {
             value={locationData?.quocGia}
             onChange={handleChangeData}
             required
+            error={!!errors?.quocGia}
+            helperText={errors?.quocGia}
           />
         </Box>
         <Box sx={{ display: "flex", mt: 3, justifyContent: "center", gap: 3 }}>
@@ -170,7 +208,7 @@ const LocationModal = () => {
           <LoadingButton
             color="success"
             variant="contained"
-            onClick={handleSubmit}
+            type="submit"
             loading={isLoading}
           >
             {type === "edit" ? "Update" : "Create"}

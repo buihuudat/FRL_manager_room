@@ -16,9 +16,9 @@ import PhotoViewFull from "../components/common/PhotoView";
 const LocationPage = () => {
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
-    { field: "tenViTri", headerName: "Location Name", width: 200 },
-    { field: "tinhThanh", headerName: "City", width: 150 },
-    { field: "quocGia", headerName: "Country", width: 150 },
+    { field: "tenViTri", headerName: "Location Name", width: 250 },
+    { field: "tinhThanh", headerName: "City", width: 250 },
+    { field: "quocGia", headerName: "Country", width: 250 },
     {
       field: "hinhAnh",
       headerName: "Image",

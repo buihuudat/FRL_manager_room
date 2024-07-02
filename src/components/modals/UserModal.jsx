@@ -38,6 +38,7 @@ const UserModal = () => {
   const [userData, setUserData] = useState(data);
   const [isLoading, setIsLoading] = useState(false);
   const [imageSelected, setImageSelected] = useState(null);
+  const [errors, setErrors] = useState(null);
 
   useEffect(() => {
     if (type === "edit" && data) setUserData(data);
@@ -45,6 +46,8 @@ const UserModal = () => {
 
   const handleClose = () => {
     setUserData(null);
+    setErrors(null);
+    setIsLoading(false);
     dispatch(
       setUserModal({
         type: null,
@@ -59,8 +62,31 @@ const UserModal = () => {
   };
 
   const handleSubmit = async (e) => {
-    setIsLoading(true);
     e.preventDefault();
+    let err = false;
+    if (userData?.name?.length < 2) {
+      setErrors((prev) => ({
+        ...prev,
+        name: "Tên phải có ít nhất 2 ký tự",
+      }));
+      err = true;
+    }
+    if (userData?.phone <= 9 || userData?.phone > 11) {
+      setErrors((prev) => ({
+        ...prev,
+        phone: "Số điện thoại không hợp lệ",
+      }));
+      err = true;
+    }
+    if (userData?.password <= 5) {
+      setErrors((prev) => ({
+        ...prev,
+        password: "Mật khẩu phải có ít nhất 6 ký tự",
+      }));
+      err = true;
+    }
+    if (err) return;
+    setIsLoading(true);
 
     try {
       // const dataUpdate = userData;
@@ -101,7 +127,7 @@ const UserModal = () => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>
+      <Box sx={style} component={"form"} onSubmit={handleSubmit}>
         <Typography
           id="modal-modal-title"
           variant="h6"
@@ -150,6 +176,8 @@ const UserModal = () => {
             required
             value={userData?.name}
             onChange={handleChangeData}
+            error={!!errors?.name}
+            helperText={errors?.name}
           />
           <TextField
             label="Số điện thoại"
@@ -157,6 +185,8 @@ const UserModal = () => {
             value={userData?.phone}
             onChange={handleChangeData}
             required
+            error={!!errors?.phone}
+            helperText={errors?.phone}
           />
           <TextField
             label="Email"
@@ -173,12 +203,15 @@ const UserModal = () => {
               type="password"
               defaultValue={data?.id}
               required
+              error={!!errors?.password}
+              helperText={errors?.password}
             />
           )}
           <TextField
             label="Ngày sinh"
             type="date"
             name="birthday"
+            key={userData?.birthday}
             value={
               type === "edit"
                 ? convertDateToISO(userData?.birthday)
@@ -196,6 +229,7 @@ const UserModal = () => {
               name="gender"
               required
               value={userData?.gender}
+              key={userData?.gender}
               onChange={handleChangeData}
             >
               <MenuItem value={true}>Male</MenuItem>
@@ -209,6 +243,7 @@ const UserModal = () => {
               name="role"
               required
               value={userData?.role}
+              key={userData?.role}
               onChange={handleChangeData}
             >
               <MenuItem value={"ADMIN"}>admin</MenuItem>
@@ -223,8 +258,8 @@ const UserModal = () => {
           <LoadingButton
             color="success"
             variant="contained"
-            onClick={handleSubmit}
             loading={isLoading}
+            type="submit"
           >
             {type === "edit" ? "Update" : "Create"}
           </LoadingButton>

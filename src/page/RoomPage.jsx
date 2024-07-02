@@ -14,11 +14,13 @@ import {
 import RoomModal from "../components/modals/RoomModal";
 import PhotoViewFull from "../components/common/PhotoView";
 import { getsLocationService } from "../services/locationService";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import DoNotDisturbAltIcon from "@mui/icons-material/DoNotDisturbAlt";
 
 const RoomPage = () => {
   var columns = [
     { field: "id", headerName: "ID", width: 70 },
-    { field: "tenPhong", headerName: "Name", width: 230 },
+    { field: "tenPhong", headerName: "Name", width: 430 },
     { field: "khach", headerName: "Guests", width: 100 },
     { field: "phongNgu", headerName: "Bedrooms", width: 100 },
     { field: "giuong", headerName: "Beds", width: 100 },
@@ -39,55 +41,190 @@ const RoomPage = () => {
       field: "mayGiat",
       headerName: "Washing Machine",
       width: 150,
-      valueGetter: (params) => (params ? "Yes" : "No"),
+      renderCell: (params) => (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+          }}
+        >
+          {params?.row?.mayGiat ? (
+            <CheckCircleIcon color="success" />
+          ) : (
+            <DoNotDisturbAltIcon color="error" />
+          )}
+        </Box>
+      ),
     },
     {
       field: "banLa",
       headerName: "Iron",
       width: 100,
-      valueGetter: (params) => (params ? "Yes" : "No"),
+      renderCell: (params) => (
+        <Box
+          sx={{
+            display: "flex",
+            // justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+          }}
+        >
+          {params?.row?.banLa ? (
+            <CheckCircleIcon color="success" />
+          ) : (
+            <DoNotDisturbAltIcon color="error" />
+          )}
+        </Box>
+      ),
     },
     {
       field: "tivi",
       headerName: "TV",
       width: 100,
-      valueGetter: (params) => (params ? "Yes" : "No"),
+      renderCell: (params) => (
+        <Box
+          sx={{
+            display: "flex",
+            // justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+          }}
+        >
+          {params?.row?.tivi ? (
+            <CheckCircleIcon color="success" />
+          ) : (
+            <DoNotDisturbAltIcon color="error" />
+          )}
+        </Box>
+      ),
     },
     {
       field: "dieuHoa",
       headerName: "Air Conditioning",
       width: 150,
-      valueGetter: (params) => (params ? "Yes" : "No"),
+      renderCell: (params) => (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+          }}
+        >
+          {params?.row?.dieuHoa ? (
+            <CheckCircleIcon color="success" />
+          ) : (
+            <DoNotDisturbAltIcon color="error" />
+          )}
+        </Box>
+      ),
     },
     {
       field: "wifi",
       headerName: "WiFi",
       width: 100,
-      valueGetter: (params) => (params ? "Yes" : "No"),
+      renderCell: (params) => (
+        <Box
+          sx={{
+            display: "flex",
+            // justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+          }}
+        >
+          {params?.row?.wifi ? (
+            <CheckCircleIcon color="success" />
+          ) : (
+            <DoNotDisturbAltIcon color="error" />
+          )}
+        </Box>
+      ),
     },
     {
       field: "bep",
       headerName: "Kitchen",
       width: 100,
-      valueGetter: (params) => (params ? "Yes" : "No"),
+      renderCell: (params) => (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+          }}
+        >
+          {params?.row?.bep ? (
+            <CheckCircleIcon color="success" />
+          ) : (
+            <DoNotDisturbAltIcon color="error" />
+          )}
+        </Box>
+      ),
     },
     {
       field: "doXe",
       headerName: "Parking",
       width: 100,
-      valueGetter: (params) => (params ? "Yes" : "No"),
+      renderCell: (params) => (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+          }}
+        >
+          {params?.row?.doXe ? (
+            <CheckCircleIcon color="success" />
+          ) : (
+            <DoNotDisturbAltIcon color="error" />
+          )}
+        </Box>
+      ),
     },
     {
       field: "hoBoi",
       headerName: "Swimming Pool",
       width: 150,
-      valueGetter: (params) => (params ? "Yes" : "No"),
+      renderCell: (params) => (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+          }}
+        >
+          {params?.row?.hoBoi ? (
+            <CheckCircleIcon color="success" />
+          ) : (
+            <DoNotDisturbAltIcon color="error" />
+          )}
+        </Box>
+      ),
     },
     {
       field: "banUi",
       headerName: "Ironing Board",
       width: 150,
-      valueGetter: (params) => (params ? "Yes" : "No"),
+      renderCell: (params) => (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+          }}
+        >
+          {params?.row?.banUi ? (
+            <CheckCircleIcon color="success" />
+          ) : (
+            <DoNotDisturbAltIcon color="error" />
+          )}
+        </Box>
+      ),
     },
     { field: "maViTri", headerName: "Location ID", width: 150 },
     {

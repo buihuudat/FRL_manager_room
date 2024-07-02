@@ -41,6 +41,7 @@ const RoomModal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [imageSelected, setImageSelected] = useState(null);
   const [locations, setLocations] = useState([]);
+  const [errors, setErrors] = useState(null);
 
   useEffect(() => {
     if (type === "edit" && data) setRoomData(data);
@@ -49,6 +50,8 @@ const RoomModal = () => {
 
   const handleClose = () => {
     setRoomData(null);
+    setErrors(null);
+    setIsLoading(false);
     dispatch(
       setRoomModal({
         type: null,
@@ -72,8 +75,63 @@ const RoomModal = () => {
   };
 
   const handleSubmit = async (e) => {
-    setIsLoading(true);
     e.preventDefault();
+    let err = false;
+
+    if (roomData?.tenPhong?.length < 5) {
+      err = true;
+      setErrors((prev) => ({
+        ...prev,
+        tenPhong: "Tên phòng phải có ít nhất 5 kí tự",
+      }));
+    }
+
+    if (roomData?.moTa?.length < 10) {
+      err = true;
+      setErrors((prev) => ({
+        ...prev,
+        mota: "Mô tả phải có ít nhất 10 kí tự",
+      }));
+    }
+
+    if (roomData?.khach <= 0) {
+      err = true;
+      setErrors((prev) => ({
+        ...prev,
+        khach: "Số khách phải lớn hơn 0",
+      }));
+    }
+    if (roomData?.phongNgu <= 0) {
+      err = true;
+      setErrors((prev) => ({
+        ...prev,
+        phongNgu: "Số phòng ngủ phải lớn hơn 0",
+      }));
+    }
+    if (roomData?.phongTam <= 0) {
+      err = true;
+      setErrors((prev) => ({
+        ...prev,
+        phongTam: "Số phòng tắm phải lớn hơn 0",
+      }));
+    }
+    if (roomData?.giuong <= 0) {
+      err = true;
+      setErrors((prev) => ({
+        ...prev,
+        giuong: "Số giường phải lớn hơn 0",
+      }));
+    }
+    if (roomData?.giaTien <= 0) {
+      err = true;
+      setErrors((prev) => ({
+        ...prev,
+        giaTien: "Giá tiền không hợp lệ",
+      }));
+    }
+    if (err) return;
+
+    setIsLoading(true);
 
     try {
       if (type === "edit") {
@@ -110,7 +168,7 @@ const RoomModal = () => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style}>
+      <Box sx={style} component={"form"} onSubmit={handleSubmit}>
         <Typography
           id="modal-modal-title"
           variant="h6"
@@ -159,6 +217,8 @@ const RoomModal = () => {
             required
             value={roomData?.tenPhong}
             onChange={handleChangeData}
+            error={!!errors?.tenPhong}
+            helperText={errors?.tenPhong}
           />
           <TextField
             label="Mô tả"
@@ -166,6 +226,8 @@ const RoomModal = () => {
             required
             value={roomData?.moTa}
             onChange={handleChangeData}
+            error={!!errors?.moTa}
+            helperText={errors?.moTa}
           />
           <TextField
             label="Số khách"
@@ -174,6 +236,8 @@ const RoomModal = () => {
             type="number"
             value={roomData?.khach}
             onChange={handleChangeData}
+            error={!!errors?.khach}
+            helperText={errors?.khach}
           />
           <TextField
             label="Số phòng ngủ"
@@ -182,6 +246,8 @@ const RoomModal = () => {
             type="number"
             value={roomData?.phongNgu}
             onChange={handleChangeData}
+            error={!!errors?.phongNgu}
+            helperText={errors?.phongNgu}
           />
           <TextField
             label="Số giường"
@@ -190,6 +256,8 @@ const RoomModal = () => {
             type="number"
             value={roomData?.giuong}
             onChange={handleChangeData}
+            error={!!errors?.giuong}
+            helperText={errors?.giuong}
           />
           <TextField
             label="Số phòng tắm"
@@ -198,6 +266,8 @@ const RoomModal = () => {
             type="number"
             value={roomData?.phongTam}
             onChange={handleChangeData}
+            error={!!errors?.phongTam}
+            helperText={errors?.phongTam}
           />
           <TextField
             label="Giá phòng"
@@ -206,6 +276,8 @@ const RoomModal = () => {
             type="number"
             value={roomData?.giaTien}
             onChange={handleChangeData}
+            error={!!errors?.giaTien}
+            helperText={errors?.giaTien}
           />
 
           <FormControl sx={{ minWidth: 220 }}>
@@ -216,6 +288,7 @@ const RoomModal = () => {
               required
               defaultValue={roomData?.maViTri}
               value={roomData?.maViTri}
+              key={roomData?.maViTri}
               onChange={handleChangeData}
               renderValue={(e) => {
                 const item = locations[e - 1];
@@ -344,7 +417,7 @@ const RoomModal = () => {
           <LoadingButton
             color="success"
             variant="contained"
-            onClick={handleSubmit}
+            type="submit"
             loading={isLoading}
           >
             {type === "edit" ? "Update" : "Create"}
