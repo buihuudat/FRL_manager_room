@@ -13,7 +13,7 @@ import {
 import { memo, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserModal } from "../../redux/slices/modalSlice";
-import { convertDateToISO, uploadImage } from "../../utils";
+import { convertDateToISO } from "../../utils";
 import { LoadingButton } from "@mui/lab";
 import {
   createUserService,

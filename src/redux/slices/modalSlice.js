@@ -11,6 +11,10 @@ const initialState = {
     open: false,
     data: null,
   },
+  userRoom: {
+    open: false,
+    data: null,
+  },
   location: {
     type: null,
     open: false,
@@ -39,10 +43,18 @@ const userSlice = createSlice({
     setBookingModal: (state, action) => {
       state.booking = action.payload;
     },
+    setUserRoomModal: (state, action) => {
+      state.userRoom = action.payload;
+    },
   },
 });
 
-export const { setUserModal, setLocationModal, setRoomModal, setBookingModal } =
-  userSlice.actions;
+export const {
+  setUserModal,
+  setLocationModal,
+  setRoomModal,
+  setBookingModal,
+  setUserRoomModal,
+} = userSlice.actions;
 
 export default userSlice.reducer;

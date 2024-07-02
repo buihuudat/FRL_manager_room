@@ -5,5 +5,6 @@ export const bookingApi = {
   get: (id) => axiosClient.get(`/dat-phong/${id}`),
   put: (id, data) => axiosClient.put(`/dat-phong/${id}`, data),
   delete: (id) => axiosClient.delete(`/dat-phong/${id}`),
-  getByUser: (userId) => axiosClient.get(`/dat-phong/${userId}`),
+  getByUser: (userId) =>
+    axiosClient.get(`/dat-phong/lay-theo-nguoi-dung/${userId}`),
 };

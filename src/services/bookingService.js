@@ -41,3 +41,13 @@ export const getRoomByUserIdService = async (userId) => {
     return null;
   }
 };
+
+export const getRoomsByUser = async (userId) => {
+  try {
+    const rooms = await bookingApi.getByUser(userId);
+    return rooms?.content;
+  } catch (error) {
+    console.error("Error fetching user's rooms:", error);
+    return [];
+  }
+};

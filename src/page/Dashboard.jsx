@@ -34,7 +34,7 @@ const Dashboard = () => {
       />
       <ViewCard
         count={booking.length}
-        title={"BOOKINGS"}
+        title={"BOOKING"}
         style={{ background: "#32D4CB" }}
       />
       <ViewCard

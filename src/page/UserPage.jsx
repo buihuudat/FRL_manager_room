@@ -9,9 +9,12 @@ import TopPage from "../components/TopPage";
 import { Avatar, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import UserModal from "../components/modals/UserModal";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserModal } from "../redux/slices/modalSlice";
+import { setUserModal, setUserRoomModal } from "../redux/slices/modalSlice";
+import { getRoomByUserIdService } from "../services/bookingService";
+import UserRoomsModal from "../components/modals/UserRoomsModal";
 
 const UserPage = () => {
   var columns = [
@@ -48,6 +51,9 @@ const UserPage = () => {
           </IconButton>
           <IconButton onClick={() => handleDelete(params.row.id)}>
             <DeleteIcon color="error" />
+          </IconButton>
+          <IconButton onClick={() => handleViewRooms(params.row)}>
+            <MeetingRoomIcon color="info" />
           </IconButton>
         </>
       ),
@@ -89,6 +95,17 @@ const UserPage = () => {
       });
   };
 
+  const handleViewRooms = (user) => {
+    getRoomByUserIdService(user?.id).then((rooms) => {
+      dispatch(
+        setUserRoomModal({
+          open: true,
+          data: { user, rooms },
+        })
+      );
+    });
+  };
+
   return (
     <div>
       <TopPage
@@ -98,6 +115,7 @@ const UserPage = () => {
       />
       <Table rows={dataResearch} columns={columns} />
       <UserModal />
+      <UserRoomsModal />
     </div>
   );
 };
