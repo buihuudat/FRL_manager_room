@@ -10,12 +10,12 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 660,
-  maxHeight: 500,
-  overflowY: "auto",
   bgcolor: "background.paper",
   boxShadow: 24,
   borderRadius: 3,
   p: 4,
+  maxHeight: "80%",
+  overflowY: "auto",
 };
 
 const UserRoomsModal = () => {

@@ -21,6 +21,7 @@ import {
   updateRoomService,
 } from "../../services/roomService";
 import { getsLocationService } from "../../services/locationService";
+import toast from "react-hot-toast";
 
 const style = {
   position: "absolute",
@@ -32,6 +33,8 @@ const style = {
   boxShadow: 24,
   borderRadius: 3,
   p: 4,
+  maxHeight: "80%",
+  overflowY: "auto",
 };
 
 const RoomModal = () => {
@@ -78,6 +81,8 @@ const RoomModal = () => {
     e.preventDefault();
     let err = false;
 
+    if (!roomData?.hinhAnh) return toast.error("Vui lòng thêm hình ảnh");
+
     if (roomData?.tenPhong?.length < 5) {
       err = true;
       setErrors((prev) => ({
@@ -90,7 +95,7 @@ const RoomModal = () => {
       err = true;
       setErrors((prev) => ({
         ...prev,
-        mota: "Mô tả phải có ít nhất 10 kí tự",
+        moTa: "Mô tả phải có ít nhất 10 kí tự",
       }));
     }
 
@@ -129,6 +134,7 @@ const RoomModal = () => {
         giaTien: "Giá tiền không hợp lệ",
       }));
     }
+    console.log(errors);
     if (err) return;
 
     setIsLoading(true);
@@ -195,9 +201,9 @@ const RoomModal = () => {
             }}
           >
             {roomData?.hinhAnh && (
-              <Avatar
+              <img
                 src={roomData?.hinhAnh}
-                sx={{ width: 100, height: 100, objectFit: "cover" }}
+                style={{ width: "auto", height: 200, objectFit: "cover" }}
               />
             )}
             <input type="file" onChange={handleImageChange} />

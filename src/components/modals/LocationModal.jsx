@@ -15,6 +15,7 @@ import {
   updateLocationService,
 } from "../../services/locationService";
 import { uploadImage } from "../../utils";
+import toast from "react-hot-toast";
 
 const style = {
   position: "absolute",
@@ -26,6 +27,8 @@ const style = {
   boxShadow: 24,
   borderRadius: 3,
   p: 4,
+  maxHeight: 500,
+  overflowY: "auto",
 };
 
 const LocationModal = () => {
@@ -57,11 +60,14 @@ const LocationModal = () => {
     setLocationData({ ...locationData, [e.target.name]: e.target.value });
   };
 
-  console.log(locationData);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     let err = false;
+
+    if (!locationData?.hinhAnh) {
+      err = true;
+      toast.error("Vui lòng thêm hình ảnh");
+    }
 
     if (!locationData?.tenViTri) {
       err = true;

@@ -26,9 +26,9 @@ export const createLocationService = async (locationData) => {
 export const updateLocationService = async (locationData) => {
   try {
     const data = await locationApi.update(locationData?.id, locationData);
+    toast.success("Location updated successfully");
     return data?.content;
   } catch (error) {
-    console.error("Error updating location:", error);
     toast.error(error?.data?.content);
     return null;
   }

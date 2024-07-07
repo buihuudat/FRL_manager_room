@@ -50,6 +50,7 @@ export const updateUserService = async (userData) => {
     toast.success("User updated successfully");
     return user?.content;
   } catch (error) {
+    console.log(error);
     toast.error(error?.data?.content);
     return null;
   }

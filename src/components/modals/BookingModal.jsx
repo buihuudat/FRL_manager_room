@@ -24,6 +24,8 @@ const style = {
   boxShadow: 24,
   borderRadius: 3,
   p: 4,
+  maxHeight: "80%",
+  overflowY: "auto",
 };
 
 const BookingModal = () => {

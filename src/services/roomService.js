@@ -38,7 +38,7 @@ export const updateRoomService = async (roomData) => {
     toast.success("Room updated successfully");
     return data?.content;
   } catch (error) {
-    console.error("Error updating room:", error);
+    toast.error(error?.data?.content);
     return null;
   }
 };
@@ -49,7 +49,7 @@ export const deleteRoomService = async (idRoom) => {
     toast.success("Room deleted successfully");
     return true;
   } catch (error) {
-    toast.error(error?.data?.message);
+    toast.error(error?.data?.content);
     return null;
   }
 };

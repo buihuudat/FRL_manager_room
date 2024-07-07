@@ -26,6 +26,8 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 600,
+  maxHeight: "80%",
+  overflowY: "auto",
   bgcolor: "background.paper",
   boxShadow: 24,
   borderRadius: 3,
@@ -64,6 +66,7 @@ const UserModal = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let err = false;
+
     if (userData?.name?.length < 2) {
       setErrors((prev) => ({
         ...prev,
@@ -71,14 +74,15 @@ const UserModal = () => {
       }));
       err = true;
     }
-    if (userData?.phone <= 9 || userData?.phone > 11) {
+    if (userData?.phone?.length <= 9 || userData?.phone?.length > 11) {
       setErrors((prev) => ({
         ...prev,
         phone: "Số điện thoại không hợp lệ",
       }));
       err = true;
     }
-    if (userData?.password <= 5) {
+    console.log(userData);
+    if (userData?.password?.length <= 5) {
       setErrors((prev) => ({
         ...prev,
         password: "Mật khẩu phải có ít nhất 6 ký tự",
@@ -202,6 +206,7 @@ const UserModal = () => {
               name="password"
               type="password"
               defaultValue={data?.id}
+              onChange={handleChangeData}
               required
               error={!!errors?.password}
               helperText={errors?.password}

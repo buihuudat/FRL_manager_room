@@ -4,7 +4,11 @@ import { getData } from "./storage";
 
 export const convertDateToISO = (dateString) => {
   if (!dateString) return dateString;
-  const [day, month, year] = dateString.split("/");
+  let path = "/";
+  if (dateString?.includes("/")) path = "/";
+  else path = "-";
+  const [day, month, year] = dateString.split(path);
+  if (day?.length === 4) return `${day}-${month}-${year}`;
   return `${year}-${month}-${day}`;
 };
 
